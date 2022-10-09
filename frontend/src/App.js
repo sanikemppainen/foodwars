@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import './index.css'
+import React, {useState} from 'react'
+import { BrowserRouter as Router, Route, Routes, Link, Redirect, Switch, useRouteMatch, useRoutes, useHistory } from 'react-router-dom'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const WelcomePage=()=>{
+  return(
+    <div className="wrapper">
+      <div className="welcomephoto"></div>
+      <div className="startphoto"></div>
     </div>
-  );
+    )
+}
+const ChoosePlayer=()=>{
+  console.log('kävi')
+  return(
+    <div>
+      choose player
+    </div>
+  )
+}
+const PlayView=()=>{
+  return(
+    <div>
+      play view
+    </div>
+  )
 }
 
-export default App;
+const App= ()=>{
+  return(
+    <div>
+    <Routes>
+      <Route path="/" element={<WelcomePage/>}/>
+      <Route path="/chooseplayer" element={<ChoosePlayer/>}/>
+      <Route path="/play" element={<PlayView/>}/>
+    </Routes>
+    </div>
+    
+  )
+}
+
+
+export default App
