@@ -2,6 +2,8 @@ import './index.css'
 import React, {useEffect, useState} from 'react'
 import { BrowserRouter as Router, Route, Routes, Link, Redirect, Switch, useRouteMatch, useRoutes, useHistory } from 'react-router-dom'
 import charactersServise from './services/characters'
+import React, {useState} from 'react'
+import { BrowserRouter as Router, Route, Routes, Link, Redirect, Switch, useRouteMatch, useRoutes, useHistory } from 'react-router-dom'
 
 const WelcomePage=()=>{
   return(
@@ -10,6 +12,7 @@ const WelcomePage=()=>{
       <a href='/chooseplayer' className="button">
         <div className="startphoto"></div>
       </a>
+      <div className="startphoto"></div>
     </div>
     )
 }
