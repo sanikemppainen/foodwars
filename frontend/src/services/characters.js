@@ -1,12 +1,16 @@
 import axios from 'axios'
 
-const baseUrl='http://fineli.fi/fineli/api/v1/foods'
-//https://fineli.fi/fineli/api/v1/foods?q=omena
+const baseUrlGood='http://localhost:3001/api/goodfoods'
+const baseUrlBad='http://localhost:3001/api/badfoods'
 
-const getAll=()=>{
-    return axios.get(baseUrl)
+const getAllGood=()=>{
+    return axios.get(baseUrlGood)
+}
+const getAllBad=()=>{
+    return axios.get(baseUrlBad)
 }
 
 export default{
-    getAll
+    getAllGood,
+    getAllBad
 }
