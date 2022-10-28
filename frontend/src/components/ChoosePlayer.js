@@ -5,12 +5,27 @@ import PlayView from './PlayView'
 const ChoosePlayer=({ goodCharacters, badCharacters})=>{
     const [player1, setPlayer1]=useState([])
     const [player2, setPlayer2]=useState([])
+    
 
     const player1ToGame=(player1)=>{
         setPlayer1(player1)
     }
     const player2ToGame=(player2)=>{
         setPlayer2(player2)
+    }
+    const setPlayersToZero=()=>{
+      setPlayer1('')
+      setPlayer2('')
+      const s = document.getElementById("idd")
+      s.style.display = "none"
+      const showspicy=document.getElementById("showspicy")
+      showspicy.style.display="none"
+      const showdeath=document.getElementById("showdeath")
+      showdeath.style.display="none"
+      const startbutton=document.getElementById("showgame")
+      startbutton.style.display="block"
+      const resetButton=document.getElementById("resetButton")
+      resetButton.style.display="none"
     }
   
     return(
@@ -64,6 +79,9 @@ const ChoosePlayer=({ goodCharacters, badCharacters})=>{
             </div>
       </div>
       <PlayView player1={player1} player2={player2}/>
+      <div className='resetDiv'>
+        <button id="resetButton" onClick={setPlayersToZero}></button>
+      </div>
     </div>
     )
   }
