@@ -1,12 +1,11 @@
+const path=require("path")
 const express = require('express')
-const app = express()
-app.use(express.json())
 const cors = require('cors')
+const app = express()
+app.use(express.static('build'))
+app.use(express.json())
 app.use(cors())
 const fs = require("fs");
-const { compileFunction } = require('vm')
-const { request } = require('http')
-const { response } = require('express')
 
 let goodFoods=[{name: 'Porkkana', id:300}, {name: 'Pähkinä', id: 375}, {name: 'Chili', id:31557}, {name:'Parsakaali', id:324}, {name: 'Puuro', id:1514}, {name: 'Papu', id:31214}]
 let goodFoodsValues=[]
@@ -98,23 +97,42 @@ function getNutritionalValues(params){
                 }
         })    
     })
-    //console.log(valuesList)
     return valuesList
     } catch (error) {
         console.log('error reading the file', error.message)
     }
 }
-//getNutritionalValues('goodFoods')
-//&console.log(getNutritionalValues('goodFoods'))
-//console.log(getNutritionalValues('badFoods'))
+
+function translate(){
+    const data= fs.readFileSync('./fooddata/foodname_EN.csv', 'utf-8')
+    data.split(/\r?\n/).forEach(row=>{
+        const fullRow=row.split(';')
+        const foodId=parseInt(fullRow[0])
+        const foodNameEn=fullRow[1]
+        if(foodNameEn===undefined){
+            return
+        }
+        const temp=foodNameEn.split(",")
+        goodFoodsValues.map(food=>{
+            if(foodId===food.id){
+                food.name=temp[0]
+            }
+        })
+        badFoodsValues.map(food=>{
+            if(foodId===food.id){
+                food.name=temp[0]
+            }
+        })    })
+}
+
 goodFoodsValues=getNutritionalValues('goodFoods')
 badFoodsValues=getNutritionalValues('badFoods')
 winners=[]
+translate()
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get('/api/goodfoods', (request, response)=>{
-    //response.send('vastaus juureen tehtyihin hakuihin')
-    console.log(request.body)
-    console.log(response.body)
+
     response.send(goodFoodsValues)
 })
 app.get('/api/goodfoods/:id', (request, response)=>{
@@ -123,9 +141,7 @@ app.get('/api/goodfoods/:id', (request, response)=>{
     response.json(food)
 })
 app.get('/api/badfoods', (request, response)=>{
-    //response.send('vastaus juureen tehtyihin hakuihin')
-    console.log(request.body)
-    console.log(response.body)
+
     response.send(badFoodsValues)
 })
 app.get('/api/badfoods/:id', (request, response)=>{
@@ -133,18 +149,24 @@ app.get('/api/badfoods/:id', (request, response)=>{
     const food=badFoodsValues.find(food=>food.id===id)
     response.json(food)
 })
+
+//for future development
 app.get('/api/winners', (request, response)=>{
     const winner=request.body
     if(winner.id){
         winners=winners.concat(winner)
     }
     response.json(winners)
-    console.log(winners)
 })
 
 
-const PORT=3001
+const PORT= process.env.PORT ||3001
 app.listen(PORT, ()=>{
     console.log(`server on port: ${PORT}`)
 })
 
+
+app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+  });
+  

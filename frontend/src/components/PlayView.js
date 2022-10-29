@@ -18,6 +18,8 @@ const PlayView=({player1, player2})=>{
     let spicynessLevel=0
     let arrayOfBattle=[]
     let clicked=false
+    let timeAddFirst=0
+    let timeAddSecond=0
 
     let winner=[]
 
@@ -34,12 +36,14 @@ const PlayView=({player1, player2})=>{
             firstToHitDefence=player1.protein/100
             firstToHitDeath=player1.cholesterol
             timeFirst=player1.delay
+            timeAddFirst=player1.delay
             secondToHit=player2 
             secondToHitHP=parseInt(player2.energy)
             secondToHitDelay=player2.delay
             secondToHitDefence=player2.protein/100
             secondToHitDeath=player2.cholesterol
             timeSecond=player2.delay
+            timeAddSecond=player2.delay
         }else{
             firstToHit=player2
             firstToHitHP=player2.energy
@@ -47,12 +51,14 @@ const PlayView=({player1, player2})=>{
             firstToHitDefence=player2.protein/100
             firstToHitDeath=player2.cholesterol
             timeFirst=player2.delay
+            timeAddFirst=player2.delay
             secondToHit=player1
             secondToHitHP=parseInt(player1.energy)
             secondToHitDelay=player2.delay
             secondToHitDefence=player2.protein/100
             secondToHitDeath=player1.cholesterol
             timeSecond=player1.delay
+            timeAddSecond=player1.delay
         }
         console.log('ALKAAAA 0 s taistelu alkaa')
         console.log('1 first hits', timeFirst, firstToHit.name, )
@@ -64,18 +70,20 @@ const PlayView=({player1, player2})=>{
                 arrayOfBattle.push(timeFirst+"s "+firstToHit.name+" hit causing "+ firstToHit.carbs+ " damage to "+secondToHit.name+" who is left with "+ (secondToHitHP-firstToHit.carbs+(firstToHit.carbs*secondToHitDefence)).toFixed(0) +" HP")
                 secondToHitHP=secondToHitHP-firstToHit.carbs+(firstToHit.carbs*secondToHitDefence)
 
-                timeFirst+=timeFirst
+                timeFirst+=timeAddFirst
+                console.log('aijat', timeFirst, timeAddFirst)
                 firstToHitDeath+=firstToHitDeath
-            }else if(timeSecond<timeFirst){
+            }else if(timeSecond<=timeFirst){
                 console.log(timeSecond,"s ", secondToHit.name,"löi aiheuttaen", secondToHit.carbs, "damagea", firstToHit.name,"lle jolle jää ", firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence), "ekan suddendeath", secondToHit.cholesterol, "tokan", firstToHit.cholesterol)
-                arrayOfBattle.push(timeSecond+"s "+secondToHit.name+" hit causing "+ secondToHit.carbs+ " damage to "+firstToHit.name+" whi is left with "+ (firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence)).toFixed(0)+" HP")
+                arrayOfBattle.push(timeSecond+"s "+secondToHit.name+" hit causing "+ secondToHit.carbs+ " damage to "+firstToHit.name+" who is left with "+ (firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence)).toFixed(0)+" HP")
                 firstToHitHP=firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence)
 
-                timeSecond+=timeSecond
+                timeSecond+=timeAddSecond
                 secondToHitDeath+=secondToHitDeath
             }
-            if (firstToHit.name ==='Chili' || secondToHit.name==='Chili'){
+            if (firstToHit.name ==='CHILI' || secondToHit.name==='CHILI'){
                 spicynessLevel+=1
+                console.log(spicynessLevel)
                 if(spicynessLevel>6){
                     showSpicy('too spicy')
                     console.log('too spicy')
@@ -100,11 +108,11 @@ const PlayView=({player1, player2})=>{
 
         }
         if(firstToHitHP<0){
-            arrayOfBattle[arrayOfBattle.length -1 ] = timeSecond-(timeSecond/2)+"s "+secondToHit.name+" hit causing "+ secondToHit.carbs+ " damage to "+firstToHit.name+" who is left with 0 HP"
+            arrayOfBattle[arrayOfBattle.length -1 ] = timeSecond-(timeAddSecond)+"s "+secondToHit.name+" hit causing "+ secondToHit.carbs+ " damage to "+firstToHit.name+" who is left with 0 HP"
             arrayOfBattle.push("And the winner is...." +secondToHit.name)
 
         }else if(secondToHitHP<0){
-            arrayOfBattle[arrayOfBattle.length -1 ] = timeFirst-(timeSecond/2)+"s "+firstToHit.name+" hit causing "+ firstToHit.carbs+ " damage to "+secondToHit.name+" who is left with 0 HP"
+            arrayOfBattle[arrayOfBattle.length -1 ] = timeFirst-(timeAddFirst)+"s "+firstToHit.name+" hit causing "+ firstToHit.carbs+ " damage to "+secondToHit.name+" who is left with 0 HP"
             arrayOfBattle.push("And the winner is...." +firstToHit.name)
 
         }
