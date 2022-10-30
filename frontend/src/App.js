@@ -5,7 +5,6 @@ import charactersServise from './services/characters'
 import WelcomePage from './components/WelcomePage'
 import ChoosePlayer from './components/ChoosePlayer'
 import PlayView from './components/PlayView'
-import { BrowserRouter as Router } from "react-router-dom";
 
 
 const App= ()=>{
@@ -20,7 +19,6 @@ const App= ()=>{
       .getAllGood()
       .then(response=>{
         setGoodCharacters(response.data)
-        console.log("good:",goodCharacters)
       })
       .catch(error=>{
         console.log('couldnt get characters from api: ', error)
@@ -47,6 +45,5 @@ const App= ()=>{
     
   )
 }
-
 
 export default App

@@ -1,11 +1,11 @@
-const path=require("path")
+const path=require('path')
 const express = require('express')
 const cors = require('cors')
 const app = express()
 app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
-const fs = require("fs");
+const fs = require('fs')
 
 let goodFoods=[{name: 'Porkkana', id:300}, {name: 'Pähkinä', id: 375}, {name: 'Chili', id:31557}, {name:'Parsakaali', id:324}, {name: 'Puuro', id:1514}, {name: 'Papu', id:31214}]
 let goodFoodsValues=[]
@@ -95,9 +95,9 @@ function getNutritionalValues(params){
                     foodIdPreviously=foodId
                     foodNamePreviously=food.name
                 }
-        })    
-    })
-    return valuesList
+            })    
+        })
+        return valuesList
     } catch (error) {
         console.log('error reading the file', error.message)
     }
@@ -112,7 +112,7 @@ function translate(){
         if(foodNameEn===undefined){
             return
         }
-        const temp=foodNameEn.split(",")
+        const temp=foodNameEn.split(',')
         goodFoodsValues.map(food=>{
             if(foodId===food.id){
                 food.name=temp[0]
@@ -127,9 +127,10 @@ function translate(){
 
 goodFoodsValues=getNutritionalValues('goodFoods')
 badFoodsValues=getNutritionalValues('badFoods')
-winners=[]
+let winners=[]
 translate()
-app.use(express.static(path.join(__dirname, "public")));
+// eslint-disable-next-line no-undef
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.get('/api/goodfoods', (request, response)=>{
 
@@ -160,13 +161,16 @@ app.get('/api/winners', (request, response)=>{
 })
 
 
+// eslint-disable-next-line no-undef
 const PORT= process.env.PORT ||3001
 app.listen(PORT, ()=>{
     console.log(`server on port: ${PORT}`)
 })
 
 
-app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-  });
-  
+app.get('/*', function (req, res) {
+    // eslint-disable-next-line no-undef
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
+module.exports = app.listen(3000)

@@ -1,6 +1,3 @@
-import { useState } from "react"
-import Notification from "./Notification"
-
 const PlayView=({player1, player2})=>{
     let startTime=0
     let firstToHit=[]
@@ -17,14 +14,8 @@ const PlayView=({player1, player2})=>{
     let timeSecond=parseInt(0)
     let spicynessLevel=0
     let arrayOfBattle=[]
-    let clicked=false
     let timeAddFirst=0
-    let timeAddSecond=0
-
-    let winner=[]
-
-    const [notification, setNotification]=useState(null)
-    
+    let timeAddSecond=0    
 
     const battle=()=>{
         arrayOfBattle = []
@@ -60,24 +51,17 @@ const PlayView=({player1, player2})=>{
             timeSecond=player1.delay
             timeAddSecond=player1.delay
         }
-        console.log('ALKAAAA 0 s taistelu alkaa')
-        console.log('1 first hits', timeFirst, firstToHit.name, )
 
         while(firstToHitHP >=0 && secondToHitHP >=0){
             if(timeFirst<timeSecond){
-                
-                console.log(timeFirst,"s ", firstToHit.name," hit causing ", firstToHit.carbs, " damage to", secondToHit.name,"which is left with ", secondToHitHP-firstToHit.carbs+(firstToHit.carbs*secondToHitDefence), "ekan suddendeath", firstToHit.cholesterol, "tokan", secondToHit.cholesterol)
                 arrayOfBattle.push(timeFirst+"s "+firstToHit.name+" hit causing "+ firstToHit.carbs+ " damage to "+secondToHit.name+" who is left with "+ (secondToHitHP-firstToHit.carbs+(firstToHit.carbs*secondToHitDefence)).toFixed(0) +" HP")
                 secondToHitHP=secondToHitHP-firstToHit.carbs+(firstToHit.carbs*secondToHitDefence)
-
                 timeFirst+=timeAddFirst
-                console.log('aijat', timeFirst, timeAddFirst)
                 firstToHitDeath+=firstToHitDeath
             }else if(timeSecond<=timeFirst){
                 console.log(timeSecond,"s ", secondToHit.name,"löi aiheuttaen", secondToHit.carbs, "damagea", firstToHit.name,"lle jolle jää ", firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence), "ekan suddendeath", secondToHit.cholesterol, "tokan", firstToHit.cholesterol)
                 arrayOfBattle.push(timeSecond+"s "+secondToHit.name+" hit causing "+ secondToHit.carbs+ " damage to "+firstToHit.name+" who is left with "+ (firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence)).toFixed(0)+" HP")
                 firstToHitHP=firstToHitHP-secondToHit.carbs+(secondToHit.carbs*firstToHitDefence)
-
                 timeSecond+=timeAddSecond
                 secondToHitDeath+=secondToHitDeath
             }
@@ -173,17 +157,10 @@ const PlayView=({player1, player2})=>{
                         ...Maybe next time check the 'Danger Points' of a character to see who is at risk of sudden death!
                     </div>
             </div>
-
         </div>
-          
-            
-       
       </div>
-      
-      
     )
-
 }
 
-  export default PlayView
+export default PlayView
 

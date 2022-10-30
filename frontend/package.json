@@ -20,8 +20,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "BUILD_PATH=../backend/public react-scripts build",    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "BUILD_PATH=../backend/public react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint ."
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +53,7 @@
     "babel-loader": "^9.0.0",
     "css-loader": "^6.7.1",
     "deep-freeze": "^0.0.1",
+    "eslint": "^8.26.0",
     "json-server": "^0.17.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.74.0",

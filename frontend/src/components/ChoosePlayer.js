@@ -90,6 +90,3 @@ const ChoosePlayer=({ goodCharacters, badCharacters})=>{
 
 export default ChoosePlayer
 
-/** <a href="/playview" className='playGame'>
-        <button className='startGameButton'></button>
-      </a> */
